@@ -2,3 +2,10 @@
     margin-bottom: 41px;
     image-rendering: crisp-edges;
 }
+
+
+@media screen and (max-width: 520px) {
+    .header__logo {
+        width: 104px;
+    }
+}

@@ -9,7 +9,7 @@
     <body>
         <div class="page">
             <header class="header">
-                <img src="images/logo 2.png" alt="Логотип" class="header__logo">
+                <img src="images/logotype.svg" alt="Логотип" class="header__logo">
             </header>
             <main class="content">
                 <section class="profile">
@@ -64,12 +64,12 @@
             <section class="popup">
                 <div class="popup__container">
                     <h3 class="popup__title">Редактировать профиль</h3>
-                    <form class="popup__form">
-                        <input type="text" placeholder="Жак-Ив Кусто" class="popup__text popup__text_type_name">
-                        <input type="text" placeholder="Исследователь океана" class="popup__text popup__text_type_about">
-                        <input type="submit" value="Сохранить" class="popup__submit-button">
+                    <form class="popup__form" name="editForm">
+                        <input type="text" placeholder="Жак-Ив Кусто" name="userName" class="popup__text popup__text_type_name">
+                        <input type="text" placeholder="Исследователь океана" name="userAbout" class="popup__text popup__text_type_about">
+                        <input type="submit" value="Сохранить" name="save" class="popup__submit-button">
                     </form>
-                    <div class="close-icon"></div>
+                    <button class="popup__close-button"></button>
                 </div>
             </section>
         </div>

@@ -2,3 +2,9 @@
     object-fit: contain;
     margin-right: 30px;
 }
+
+@media screen and (max-width: 520px) {
+    .avatar {
+        margin-right: 0;
+    }
+}

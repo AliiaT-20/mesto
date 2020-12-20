@@ -1,6 +1,7 @@
 .profile__text-info {
   display: flex;
-  flex-direction: rowz;
+  flex-direction: row;
+  align-items: baseline;
 }
 
 
