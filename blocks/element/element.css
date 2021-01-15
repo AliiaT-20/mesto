@@ -9,6 +9,12 @@
     color: #000;
     padding-bottom: 31px;
     margin-bottom: 20px;
+    margin-right: 17px;
+    position: relative;
+}
+
+.element:nth-child(3n) {
+    margin-right: 0;
 }
 
 @media screen and (max-width: 880px) {
