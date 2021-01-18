@@ -110,8 +110,10 @@ function submitAddForm(event) {
     closePopup(popupAdd);
 }
 
-editButton.addEventListener('click', function () {openPopup(popupEdit);});
-editButton.addEventListener('click', function() {editProfile();});
+editButton.addEventListener('click', function () {
+    openPopup(popupEdit);
+    editProfile();
+});
 closeButtonEdit.addEventListener('click', function () {closePopup(popupEdit);});
 addButton.addEventListener('click', function () {
     openPopup(popupAdd);
