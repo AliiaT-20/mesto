@@ -115,6 +115,21 @@ editButton.addEventListener('click', function () {
     editProfile();
 });
 closeButtonEdit.addEventListener('click', function () {closePopup(popupEdit);});
+document.addEventListener('keydown', function(evt) {
+    if (evt.keyCode === 27) {
+        closePopup(popupEdit);
+    }
+})
+document.addEventListener('keydown', function(evt) {
+    if (evt.keyCode === 27) {
+        closePopup(popupAdd);
+    }
+})
+document.addEventListener('keydown', function(evt) {
+    if (evt.keyCode === 27) {
+        closePopup(popupImage);
+    }
+})
 addButton.addEventListener('click', function () {
     openPopup(popupAdd);
     placeLink.value = "";
