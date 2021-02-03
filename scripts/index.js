@@ -63,7 +63,7 @@ function editProfile() {
     about.value = profileAbout.textContent;
 }
 
-function createCard(card, item) {
+function createCard(card) {
     const elementCard = elementTemplate.cloneNode(true);
     elementCard.querySelector('.element__button').addEventListener('click', function (evt) {
         evt.target.classList.toggle('element__button_active')
@@ -75,9 +75,9 @@ function createCard(card, item) {
     });
     const elementPhoto = elementCard.querySelector('.element__photo');
     const elementTitle = elementCard.querySelector('.element__title');
-    elementPhoto.src = card.link || item.value;
+    elementPhoto.src = card.link;
     elementPhoto.alt = card.name;
-    elementTitle.textContent = card.value || card.name;
+    elementTitle.textContent = card.name;
     elementPhoto.addEventListener('click', function () {
         openPopup(popupImage);
         image.src = card.link;
@@ -114,7 +114,7 @@ function submitProfileForm(event) {
 
 function submitAddForm(event) {
     event.preventDefault();
-    const addingByUserCard = createCard(placeTitle, placeLink);
+    const addingByUserCard = createCard({name: placeTitle.value, link: placeLink.value});
     renderCardAtStart(addingByUserCard);
     closePopup(popupAdd);
 }
