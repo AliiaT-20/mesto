@@ -1,3 +1,6 @@
+import {config, FormValidator} from "./FormValidator.js"
+import Card from "./Card.js"
+
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button')
 const popupEdit = document.querySelector('.popup_type_edit');
@@ -9,6 +12,16 @@ const about = popupEdit.querySelector('.popup__text_type_about');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
 const formEdit = popupEdit.querySelector(".popup__form_type_edit");
+const elements = document.querySelector('.elements');
+const placeTitle = popupAdd.querySelector('.popup__text_type_title');
+const placeLink = popupAdd.querySelector('.popup__text_type_link');
+const formAdd = popupAdd.querySelector('.popup__form_type_add');
+const popupImage = document.querySelector('.popup_type_image');
+const image = popupImage.querySelector('.popup__image');
+const title = popupImage.querySelector('.popup__image-title');
+const closeButtonImage = document.querySelector('.popup__close-button_type_image');
+const popups = document.querySelectorAll('.popup');
+const forms = document.querySelectorAll('.popup__form');
 const initialCards = [
     {
       name: 'Архыз',
@@ -35,16 +48,7 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
-const elements = document.querySelector('.elements');
-const elementTemplate = document.querySelector('#element-template').content;
-const placeTitle = popupAdd.querySelector('.popup__text_type_title');
-const placeLink = popupAdd.querySelector('.popup__text_type_link');
-const formAdd = popupAdd.querySelector('.popup__form_type_add');
-const popupImage = document.querySelector('.popup_type_image');
-const image = popupImage.querySelector('.popup__image');
-const title = popupImage.querySelector('.popup__image-title');
-const closeButtonImage = document.querySelector('.popup__close-button_type_image');
-const popups = document.querySelectorAll('.popup')
+
 
 function closeByEscape(evt) {
     if (evt.key === 'Escape') {
@@ -63,27 +67,8 @@ function editProfile() {
     about.value = profileAbout.textContent;
 }
 
-function createCard(card) {
-    const elementCard = elementTemplate.cloneNode(true);
-    elementCard.querySelector('.element__button').addEventListener('click', function (evt) {
-        evt.target.classList.toggle('element__button_active')
-    }); 
-    const buttonTrash = elementCard.querySelector('.element__button-trash');
-    buttonTrash.addEventListener('click', function () {
-        const cardItem = buttonTrash.closest('.element');
-        cardItem.remove();
-    });
-    const elementPhoto = elementCard.querySelector('.element__photo');
-    const elementTitle = elementCard.querySelector('.element__title');
-    elementPhoto.src = card.link;
-    elementPhoto.alt = card.name;
-    elementTitle.textContent = card.name;
-    elementPhoto.addEventListener('click', function () {
-        openPopup(popupImage);
-        image.src = card.link;
-        title.textContent = card.name;
-    });
-    return elementCard;
+function createCard(card, cardSelector) {
+    return new Card(card, cardSelector);
 }
 
 function renderCardAtEnd(item) {
@@ -93,12 +78,6 @@ function renderCardAtEnd(item) {
 function renderCardAtStart(item) {
     elements.prepend(item);
 }
-
-initialCards.forEach (card => {
-    const additionalCard = createCard(card);
-    renderCardAtEnd(additionalCard);
-})
-
 
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
@@ -114,7 +93,7 @@ function submitProfileForm(event) {
 
 function submitAddForm(event) {
     event.preventDefault();
-    const addingByUserCard = createCard({name: placeTitle.value, link: placeLink.value});
+    const addingByUserCard = new Card({name: placeTitle.value, link: placeLink.value}, '.card-template_type_photo').generateCard();
     renderCardAtStart(addingByUserCard);
     closePopup(popupAdd);
 }
@@ -142,5 +121,17 @@ addButton.addEventListener('click', function () {
     placeTitle.value = "";
 });
 
+forms.forEach((form) => {
+    const validator = new FormValidator(config, form);
+    validator.enableValidation();
+})
+
 formEdit.addEventListener('submit', submitProfileForm);
 formAdd.addEventListener('submit',  submitAddForm);
+
+
+initialCards.forEach((item) => {
+    const card = new Card(item, '.card-template_type_photo');
+    const cardElement = card.generateCard();
+    elements.append(cardElement);
+})
