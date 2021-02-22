@@ -1,8 +1,9 @@
 export default class Card {
-    constructor(data, cardSelector) {
+    constructor(data, cardSelector, handleCardClick) {
         this._title = data.name;
         this._image = data.link;
         this._cardSelector = cardSelector;
+        this._handleCardClick = handleCardClick;
     }
     _getTemplate() {
         const cardElement = document
@@ -15,9 +16,12 @@ export default class Card {
     }
     generateCard() {
         this._element = this._getTemplate();
+        this._imageCard = this._element.querySelector('.element__photo');
+        this._titleCard = this._element.querySelector('.element__title');
         this._setEventListeners();
-        this._element.querySelector('.element__photo').src = this._image;
-        this._element.querySelector('.element__title').textContent = this._title;
+        this._imageCard.src = this._image;
+        this._imageCard.alt = "Картинка - " + this._title;
+        this._titleCard.textContent = this._title;
         
         return this._element;
     }
@@ -28,21 +32,8 @@ export default class Card {
         this._element.querySelector('.element__button').addEventListener('click', (evt) => {
             this._handleLikeCard(evt);
         })
-        this._element.querySelector('.element__photo').addEventListener('click', () => {
-            this._handleImagePopup();
-        })
-        document.querySelector('.popup__close-button_type_image').addEventListener('click', () => {
-            this._handleCloseImagePopup();
-        })
-        document.addEventListener('keydown', (evt) => {
-            if (evt.key === 'Escape') {
-                this._handleCloseImagePopup();
-              }
-        })
-        document.querySelector('.popup_type_image').addEventListener('click', (evt) => {
-            if (evt.target.classList.contains('popup_opened')) {
-                this._handleCloseImagePopup();
-            }
+        this._imageCard.addEventListener('click', () => {
+            this._handleCardClick(this._title, this._image);
         })
        
     }
@@ -51,14 +42,6 @@ export default class Card {
     }
     _handleLikeCard(evt) {
         evt.target.classList.toggle('element__button_active');
-    }
-    _handleImagePopup() {
-        document.querySelector('.popup_type_image').classList.add('popup_opened');
-        document.querySelector('.popup__image').src = this._image;
-        document.querySelector('.popup__image-title').textContent = this._title;
-    }
-    _handleCloseImagePopup() {
-        document.querySelector('.popup_type_image').classList.remove('popup_opened');
     }
 }
 

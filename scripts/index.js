@@ -1,53 +1,8 @@
-import {config, FormValidator} from "./FormValidator.js"
+import {FormValidator} from "./FormValidator.js"
 import Card from "./Card.js"
+import {editButton, addButton, popupEdit, popupAdd, name, about, profileName, profileAbout, formEdit, elements,
+    placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, initialCards, config} from "./constants.js"
 
-const editButton = document.querySelector('.profile__edit-button');
-const addButton = document.querySelector('.profile__add-button')
-const popupEdit = document.querySelector('.popup_type_edit');
-const popupAdd = document.querySelector('.popup_type_add');
-const closeButtonEdit = document.querySelector('.popup__close-button_type_edit')
-const closeButtonAdd = document.querySelector('.popup__close-button_type_add')
-const name = popupEdit.querySelector('.popup__text_type_name');
-const about = popupEdit.querySelector('.popup__text_type_about');
-const profileName = document.querySelector('.profile__name');
-const profileAbout = document.querySelector('.profile__about');
-const formEdit = popupEdit.querySelector(".popup__form_type_edit");
-const elements = document.querySelector('.elements');
-const placeTitle = popupAdd.querySelector('.popup__text_type_title');
-const placeLink = popupAdd.querySelector('.popup__text_type_link');
-const formAdd = popupAdd.querySelector('.popup__form_type_add');
-const popupImage = document.querySelector('.popup_type_image');
-const image = popupImage.querySelector('.popup__image');
-const title = popupImage.querySelector('.popup__image-title');
-const closeButtonImage = document.querySelector('.popup__close-button_type_image');
-const popups = document.querySelectorAll('.popup');
-const forms = document.querySelectorAll('.popup__form');
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
 
 
 function closeByEscape(evt) {
@@ -67,12 +22,8 @@ function editProfile() {
     about.value = profileAbout.textContent;
 }
 
-function createCard(card, cardSelector) {
-    return new Card(card, cardSelector);
-}
-
-function renderCardAtEnd(item) {
-    elements.append(item);
+function createCard(card) {
+    return new Card(card, '.card-template_type_photo', handleCardClick).generateCard();
 }
 
 function renderCardAtStart(item) {
@@ -93,9 +44,20 @@ function submitProfileForm(event) {
 
 function submitAddForm(event) {
     event.preventDefault();
-    const addingByUserCard = new Card({name: placeTitle.value, link: placeLink.value}, '.card-template_type_photo').generateCard();
+    const addingByUserCard = createCard({name: placeTitle.value, link: placeLink.value});
     renderCardAtStart(addingByUserCard);
     closePopup(popupAdd);
+}
+
+function validateForm(form) {
+    const validator = new FormValidator(config, form);
+    validator.enableValidation();
+}
+
+function handleCardClick(title, image) {
+    photoFromPopupImage.src = image;
+    titleFromPopupImage.textContent = title;
+    openPopup(popupImage);
 }
 
 popups.forEach((popup) => {
@@ -117,21 +79,19 @@ editButton.addEventListener('click', function () {
 
 addButton.addEventListener('click', function () {
     openPopup(popupAdd);
-    placeLink.value = "";
-    placeTitle.value = "";
+    formAdd.reset();
+    submitButtonAddForm.disabled = true;
+    submitButtonAddForm.classList.add("popup__submit-button_inactive")
 });
 
-forms.forEach((form) => {
-    const validator = new FormValidator(config, form);
-    validator.enableValidation();
-})
+validateForm(formAdd);
+validateForm(formEdit);
 
 formEdit.addEventListener('submit', submitProfileForm);
 formAdd.addEventListener('submit',  submitAddForm);
 
 
 initialCards.forEach((item) => {
-    const card = new Card(item, '.card-template_type_photo');
-    const cardElement = card.generateCard();
-    elements.append(cardElement);
+    const card = createCard(item);
+    elements.append(card);
 })

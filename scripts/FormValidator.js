@@ -1,13 +1,4 @@
-export {config, FormValidator}
-
-const config = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__text',
-    submitButtonSelector: '.popup__submit-button',
-    inactiveButtonClass: 'popup__submit-button_inactive',
-    inputErrorClass: 'popup__text_type_error',
-    errorClass: 'popup__text-error_active',
-}
+export {FormValidator}
 
 class FormValidator {
   constructor(data, formElement) {
@@ -26,7 +17,6 @@ class FormValidator {
   }
   _hideInputError(input) {
     const errorElement = this._formElement.querySelector(`.${input.id}-error`);
-    console.log(errorElement)
     input.classList.remove(this._inputErrorClass);
     errorElement.classList.remove(this._errorClass);
     errorElement.textContent = '';
@@ -46,8 +36,10 @@ class FormValidator {
   _toggleButtonState() {
     if (this._hasInvalidInput()) {
       this._submitButton.classList.add(this._inactiveButtonClass);
+      this._submitButton.disabled = true;
     } else {
       this._submitButton.classList.remove(this._inactiveButtonClass);
+      this._submitButton.disabled = false;
     }
   }
   _setEventListeners() {
@@ -63,7 +55,10 @@ class FormValidator {
       });
   }
   enableValidation() {
-      this._toggleButtonState();
+    (evt) => {
+        evt.preventDefault;
+    };
+    this._toggleButtonState();
     this._setEventListeners();
   }
 }
