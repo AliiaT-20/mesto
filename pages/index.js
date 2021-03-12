@@ -16,40 +16,41 @@ const validatorFormEdit = new FormValidator(config, formEdit);
 validatorFormEdit.enableValidation();
 
 const imagePopup = new PopupWithImage('.popup_type_image');
+imagePopup.setEventListeners();
+
+function createCard(item) {
+    return new Card(item, '.card-template_type_photo', (title, image) => {
+        imagePopup.open(title, image);
+    }).generateCard();
+}
 
 const cardList= new Section({items: initialCards, renderer: (item) => {
-    const card = new Card(item, '.card-template_type_photo', (title, image) => {
-        imagePopup.open(title, image);
-    });
-    const cardElement = card.generateCard();
-    cardList.addItem(cardElement);
+    const card = createCard(item);
+    cardList.addItem(card);
 }}, '.elements')
 cardList.renderItems();
 
-const addPopup = new PopupWithForm('.popup_type_add', () => {
-    const card = new Card({name: placeTitle.value, link: placeLink.value}, '.card-template_type_photo', (title, image) => {
-        imagePopup.open(title, image);
-    });
-    const cardElement = card.generateCard();
-    cardList.addItemStart(cardElement);
+const addPopup = new PopupWithForm('.popup_type_add', (inputs) => {
+    const card = createCard(inputs);
+    cardList.addItemStart(card);
     addPopup.close();
 });
+addPopup.setEventListeners();
 addButton.addEventListener('click', function () {
     addPopup.open();
-    addPopup.setEventListeners();
     submitButtonAddForm.disabled = true;
     submitButtonAddForm.classList.add("popup__submit-button_inactive")
 });
 
 const user = new UserInfo({name: '.profile__name', about: '.profile__about'})
 
+const editPopup = new PopupWithForm('.popup_type_edit', (inputs) => {
+    user.setUserInfo(inputs.name, inputs.about)
+    editPopup.close();
+});
+editPopup.setEventListeners();
 editButton.addEventListener('click', function () {
     editPopup.open();
     name.value = user.getUserInfo().name;
     about.value = user.getUserInfo().about;
-    editPopup.setEventListeners();
-});
-const editPopup = new PopupWithForm('.popup_type_edit', () => {
-    user.setUserInfo(name.value, about.value)
-    editPopup.close();
 });
