@@ -1,10 +1,6 @@
 .avatar {
-    object-fit: contain;
-    margin-right: 30px;
-}
-
-@media screen and (max-width: 520px) {
-    .avatar {
-        margin-right: 0;
-    }
+    object-fit: cover;
+    width: 120px;
+    height: 120px;
+    border-radius: 100%;
 }

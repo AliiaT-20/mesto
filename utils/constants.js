@@ -1,5 +1,5 @@
-export {editButton, addButton, popupEdit, popupAdd, name, about, profileName, profileAbout, formEdit, elements,
-placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, initialCards, config}
+export {editButton, addButton, popupEdit, popupAdd, name, about, profileName, profileAbout, profileAvatar, formEdit, elements,
+placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, updateAvatar, initialCards, config}
 
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button')
@@ -9,6 +9,7 @@ const name = popupEdit.querySelector('.popup__text_type_name');
 const about = popupEdit.querySelector('.popup__text_type_about');
 const profileName = document.querySelector('.profile__name');
 const profileAbout = document.querySelector('.profile__about');
+const profileAvatar = document.querySelector('.avatar');
 const formEdit = popupEdit.querySelector(".popup__form_type_edit");
 const elements = document.querySelector('.elements');
 const placeTitle = popupAdd.querySelector('.popup__text_type_title');
@@ -19,6 +20,7 @@ const submitButtonAddForm = popupAdd.querySelector('.popup__submit-button');
 const popupImage = document.querySelector('.popup_type_image');
 const photoFromPopupImage = popupImage.querySelector('.popup__image');
 const titleFromPopupImage = popupImage.querySelector('.popup__image-title');
+const updateAvatar = document.querySelector('.profile__wrap-edit');
 const initialCards = [
     {
       title: 'Архыз',

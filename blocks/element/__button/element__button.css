@@ -1,7 +1,6 @@
 .element__button {
     background-color: transparent;
     border: none;
-    margin-right: 30px;
     padding: 0;
     background-image: url(../../../images/like.svg);
     background-repeat: no-repeat;
@@ -9,6 +8,7 @@
     background-size: initial;
     cursor: pointer;
     width: 21px;
+    height: 21px;
     opacity: 1;
     transition: opacity 0.4s ease;
 }
