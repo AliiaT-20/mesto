@@ -8,7 +8,7 @@ import PopupWithSubmit from "../components/PopupWithSubmit.js"
 import UserInfo from "../components/UserInfo.js"
 import Api from "../components/Api.js"
 import {editButton, addButton, popupEdit, popupAdd, name, about, profileName, profileAbout, profileAvatar, formEdit, elements,
-    placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, updateAvatar, initialCards, config} from "../utils/constants.js"
+    placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, updateAvatar, formAva, initialCards, config} from "../utils/constants.js"
 import Popup from '../components/Popup';
 
 const api = new Api({
@@ -37,6 +37,11 @@ validatorFormAdd.enableValidation();
 
 const validatorFormEdit = new FormValidator(config, formEdit);
 validatorFormEdit.enableValidation();
+
+const validatorFormAva = new FormValidator(config, formAva);
+validatorFormAva.enableValidation();
+
+
 
 const imagePopup = new PopupWithImage('.popup_type_image');
 imagePopup.setEventListeners();

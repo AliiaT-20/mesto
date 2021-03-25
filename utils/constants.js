@@ -1,5 +1,5 @@
 export {editButton, addButton, popupEdit, popupAdd, name, about, profileName, profileAbout, profileAvatar, formEdit, elements,
-placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, updateAvatar, initialCards, config}
+placeTitle, placeLink, formAdd, popups, submitButtonAddForm, popupImage, photoFromPopupImage, titleFromPopupImage, updateAvatar, formAva, initialCards, config}
 
 const editButton = document.querySelector('.profile__edit-button');
 const addButton = document.querySelector('.profile__add-button')
@@ -21,6 +21,7 @@ const popupImage = document.querySelector('.popup_type_image');
 const photoFromPopupImage = popupImage.querySelector('.popup__image');
 const titleFromPopupImage = popupImage.querySelector('.popup__image-title');
 const updateAvatar = document.querySelector('.profile__wrap-edit');
+const formAva = document.querySelector('.popup_type_edit-profile');
 const initialCards = [
     {
       title: 'Архыз',
