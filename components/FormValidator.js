@@ -64,4 +64,8 @@ class FormValidator {
     this._toggleButtonState();
     this._setEventListeners();
   }
+  disableSubmitButton() {
+    this._submitButton.classList.add(this._inactiveButtonClass);
+    this._submitButton.disabled = true;
+  }
 }

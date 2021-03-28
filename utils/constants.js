@@ -21,7 +21,7 @@ const popupImage = document.querySelector('.popup_type_image');
 const photoFromPopupImage = popupImage.querySelector('.popup__image');
 const titleFromPopupImage = popupImage.querySelector('.popup__image-title');
 const updateAvatar = document.querySelector('.profile__wrap-edit');
-const formAva = document.querySelector('.popup_type_edit-profile');
+const formAva = document.querySelector('.popup__form_type_edit-profile');
 const initialCards = [
     {
       title: 'Архыз',
