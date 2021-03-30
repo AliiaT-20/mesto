@@ -53,8 +53,10 @@ export default class Card {
         this._element.querySelector('.element__button-trash').closest('.element').remove()
     }
     _setEventListeners() {
-        this._element.querySelector('.element__button-trash').addEventListener('click', () => {
-            this._handleTrashClick(this._newCardId, this._element, this);
+        this._element.querySelector('.element__button-trash').addEventListener('click', (evt) => {
+
+            console.log(evt)
+            this._handleTrashClick(this._newCardId, this);
         })
         this._element.querySelector('.element__button').addEventListener('click', (evt) => {
             if (this._isLiked(evt)) {

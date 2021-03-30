@@ -27,24 +27,18 @@ function getIdProfile(id) {
     userID = id
 }
 
-api.getProfileInfo()
-.then((info) => {
+Promise.all([api.getProfileInfo(), api.getInitialCards()])
+  .then(([ info, data ]) => { 
     user.setUserInfo(info.name, info.about, info.avatar);
     getIdProfile(info._id)
-})
-.catch(err => Promise.reject(err))
-
-api.getInitialCards()
-.then((data) => {
     cardList = new Section({items: data, renderer: (item) => {
         const card = createCard(item, userID);
         const newCard = card.generateCard(item);
         cardList.addItem(newCard)
     }}, '.elements')
     cardList.renderItems();
-})
-.catch(err => Promise.reject(err))
-
+    })
+  .catch(err => Promise.reject(err)); 
 
 const validatorFormAdd = new FormValidator(config, formAdd);
 validatorFormAdd.enableValidation();
@@ -55,11 +49,8 @@ validatorFormEdit.enableValidation();
 const validatorFormAva = new FormValidator(config, formAva);
 validatorFormAva.enableValidation();
 
-
-
 const imagePopup = new PopupWithImage('.popup_type_image');
 imagePopup.setEventListeners();
-
 
 const removePopup = new PopupWithSubmit('.popup_type_remove-card', (id, card) => {
     api.removeCard(id)
@@ -69,6 +60,7 @@ const removePopup = new PopupWithSubmit('.popup_type_remove-card', (id, card) =>
     })
     .catch(err => Promise.reject(err))
 });
+removePopup.setEventListeners()
 
 function handleLikeCard(card) {
     api.addLike(card.getId())
@@ -83,11 +75,10 @@ function handleDeleteLike(card) {
 }  
 
 function createCard(item, id) {
-    return new Card(item, '.card-template_type_photo', (title, image, card) => {
+    return new Card(item, '.card-template_type_photo', (title, image) => {
         imagePopup.open(title, image);
-    }, (cardId, element, card) => {
-        removePopup.open();
-        removePopup.setEventListeners(cardId, element, card)
+    }, (id, element) => {
+        removePopup.open(id, element);
     }, id, handleLikeCard, handleDeleteLike)
 }
 
@@ -123,9 +114,10 @@ const editPopup = new PopupWithForm('.popup_type_edit', (inputs) => {
 });
 editPopup.setEventListeners();
 editButton.addEventListener('click', function () {
+    const userData =user.getUserInfo();
+    name.value = userData .name;
+    about.value = userData .about;
     editPopup.open();
-    name.value = user.getUserInfo().name;
-    about.value = user.getUserInfo().about;
 });
 
 const updateAvatarPopup = new PopupWithForm('.popup_type_edit-profile', (inputs) => {
